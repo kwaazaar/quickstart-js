@@ -28,11 +28,19 @@ limitations under the License.
   <link rel="stylesheet" href="main.css">
 
   <!-- Import and configure the Firebase SDK -->
-  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-  <script src="/__/firebase/5.5.9/firebase-app.js"></script>
-  <script src="/__/firebase/5.5.9/firebase-auth.js"></script>
-  <script src="/__/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBcbJ5iqInZNz3BRmQOhdGpbOFL0XVbXi8",
+      authDomain: "qbuzz-fa513.firebaseapp.com",
+      databaseURL: "https://qbuzz-fa513.firebaseio.com",
+      projectId: "qbuzz-fa513",
+      storageBucket: "qbuzz-fa513.appspot.com",
+      messagingSenderId: "231155262587"
+    };
+    firebase.initializeApp(config);
+  </script>
 
   <script type="text/javascript">
 
@@ -41,7 +49,11 @@ limitations under the License.
      */
     // [START buttoncallback]
     function toggleSignIn() {
-      if (!firebase.auth().currentUser) {
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        // [END signout]
+      } else {
         // [START createprovider]
         var provider = new firebase.auth.GoogleAuthProvider();
         // [END createprovider]
@@ -51,10 +63,6 @@ limitations under the License.
         // [START signin]
         firebase.auth().signInWithRedirect(provider);
         // [END signin]
-      } else {
-        // [START signout]
-        firebase.auth().signOut();
-        // [END signout]
       }
       // [START_EXCLUDE]
       document.getElementById('quickstart-sign-in').disabled = true;
